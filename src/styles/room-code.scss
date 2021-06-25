@@ -10,12 +10,14 @@
   display: flex;
 
   div {
+    width: 46px;
     background: #835afd;
     padding: 0 12px;
     display: flex;
     justify-content: center;
     align-items: center;
   }
+
   span {
     display: block;
     align-self: center;
@@ -24,5 +26,9 @@
     width: 230px;
     font-size: 14px;
     font-weight: 500;
+
+    @media (max-width: 686px) {
+      display: none;
+    }
   }
 }

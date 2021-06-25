@@ -1,6 +1,8 @@
 import { useParams } from 'react-router';
+import Switch from 'react-switch';
 
 import logoImg from '../assets/images/logo.svg';
+import whiteLogoImg from '../assets/images/whiteLogo.svg';
 import deleteImg from '../assets/images/delete.svg';
 import checkImg from '../assets/images/check.svg';
 import answerImg from '../assets/images/answer.svg';
@@ -13,12 +15,15 @@ import { useRoom } from '../hooks/useRoom';
 import '../styles/room.scss';
 import { database } from '../services/firebase';
 import { useHistory } from 'react-router-dom';
+import { useTheme } from '../hooks/useTheme';
+import { useEffect } from 'react';
 
 type RoomParams = {
   id: string;
 };
 
 export function AdminRoom() {
+  const { theme, toggleTheme } = useTheme();
   const history = useHistory();
   const params = useParams<RoomParams>();
   const roomId = params.id;
@@ -50,12 +55,24 @@ export function AdminRoom() {
     });
   }
 
+  useEffect(() => {}, [toggleTheme]);
+
   return (
-    <div id="page-room">
+    <div id="page-room" className={theme}>
       <header>
         <div className="content">
-          <img src={logoImg} alt="" />
-          <div>
+          <div className="right-header">
+            <img src={theme === 'light' ? logoImg : whiteLogoImg} alt="" />
+            <Switch
+              onChange={toggleTheme}
+              checked={theme === 'dark'}
+              checkedIcon={false}
+              uncheckedIcon={false}
+              offColor={'#252525'}
+              onColor={'#c2c2c2'}
+            />
+          </div>
+          <div className="left-header">
             <RoomCode code={roomId} />
             <Button isOutlined onClick={handleEndRoom}>
               Encerrar Sala

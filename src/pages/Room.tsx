@@ -1,12 +1,15 @@
-import { FormEvent, useState } from 'react';
+import { FormEvent, useEffect, useState } from 'react';
 import { useParams } from 'react-router';
+import Switch from 'react-switch';
 
 import logoImg from '../assets/images/logo.svg';
+import whiteLogoImg from '../assets/images/whiteLogo.svg';
 import { Button } from '../components/Button';
 import { Question } from '../components/Question';
 import { RoomCode } from '../components/RoomCode';
 import { useAuth } from '../hooks/useAuth';
 import { useRoom } from '../hooks/useRoom';
+import { useTheme } from '../hooks/useTheme';
 import { database } from '../services/firebase';
 
 import '../styles/room.scss';
@@ -17,6 +20,7 @@ type RoomParams = {
 
 export function Room() {
   const { user } = useAuth();
+  const { theme, toggleTheme } = useTheme();
   const params = useParams<RoomParams>();
   const [newQuestion, setNewQuestion] = useState('');
   const roomId = params.id;
@@ -63,12 +67,26 @@ export function Room() {
     setNewQuestion('');
   }
 
+  useEffect(() => {}, [toggleTheme]);
+
   return (
-    <div id="page-room">
+    <div id="page-room" className={theme}>
       <header>
         <div className="content">
-          <img src={logoImg} alt="" />
-          <RoomCode code={params.id} />
+          <div className="right-header">
+            <img src={theme === 'light' ? logoImg : whiteLogoImg} alt="" />
+            <Switch
+              onChange={() => toggleTheme()}
+              checked={theme === 'dark'}
+              checkedIcon={false}
+              uncheckedIcon={false}
+              offColor={'#252525'}
+              onColor={'#c2c2c2'}
+            />
+          </div>
+          <div className="left-header">
+            <RoomCode code={params.id} />
+          </div>
         </div>
       </header>
       <main className="content">
