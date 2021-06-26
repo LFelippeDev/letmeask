@@ -49,5 +49,3 @@ Este é um projeto desenvolvido durante a [Next Level Week Together](https://roc
 Você pode visualizar o layout do projeto através do link abaixo:
 
 [Layout Web](https://letmeask-ed169.firebaseapp.com/)
-## 📝 License
-Esse projeto está sob a licença MIT. Veja o arquivo [LICENSE]() para mais detalhes.
